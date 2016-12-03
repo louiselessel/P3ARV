@@ -11,9 +11,16 @@ namespace Vuforia
     /// <summary>
     /// A custom handler that implements the ITrackableEventHandler interface.
     /// </summary>
+
     public class DefaultTrackableEventHandler : MonoBehaviour,
                                                 ITrackableEventHandler
     {
+
+		// ADDITION TO SCRIPT to override normal functionality:
+		public bool detected = false;
+		string nameGO;
+
+
         #region PRIVATE_MEMBER_VARIABLES
  
         private TrackableBehaviour mTrackableBehaviour;
@@ -84,6 +91,12 @@ namespace Vuforia
             }
 
             Debug.Log("Trackable " + mTrackableBehaviour.TrackableName + " found");
+
+
+			// ADDITION TO SCRIPT:
+			detected = true;
+			nameGO = gameObject.name;
+			Debug.Log ("Info about detection and name sent: " + nameGO +" "+ detected);
         }
 
 
@@ -105,6 +118,11 @@ namespace Vuforia
             }
 
             Debug.Log("Trackable " + mTrackableBehaviour.TrackableName + " lost");
+
+			// ADDITION TO SCRIPT:
+			detected = false;
+			nameGO = gameObject.name;
+			Debug.Log ("Info about detection and name sent: " + nameGO +" "+ detected);
         }
 
         #endregion // PRIVATE_METHODS
