@@ -54,7 +54,6 @@
      <Compile Include="Assets\Common\SplashAbout\LoadingScreen.cs" />
      <Compile Include="Assets\Common\TapHandler.cs" />
      <Compile Include="Assets\Common\TrackableSettings.cs" />
-     <Compile Include="Assets\PureMagicScript.cs" />
      <Compile Include="Assets\Scripts\Autofocus.cs" />
      <Compile Include="Assets\Scripts\BackButton.cs" />
      <Compile Include="Assets\Scripts\FrameRateControl.cs" />

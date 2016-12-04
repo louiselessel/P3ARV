@@ -6,10 +6,17 @@ namespace Vuforia {
 	public class triggerDetectedScript : MonoBehaviour {
 
 		// used to see if there is a detection
-		bool currentStatus;
+		bool currentStatus = false;
+		// used to manage the status for each frame and detect changes
+		bool prevStatus = false;
+
+		// used to manage the first call of all effects
+		bool triggered = false;
 
 		// used for getting all of the GO's that are markers
 		public GameObject[] markers = new GameObject[10];
+
+		string markerON = "";
 
 		// find the GO's using a coroutine								CURRENTLY NOT IN USE
 		private IEnumerator coroutine;
@@ -19,6 +26,7 @@ namespace Vuforia {
 // INSERT MORE EFFECTS like the RainEffect;
 
 
+	
 
 		void Start () {
 			print ("Start IS RUN");
@@ -59,28 +67,43 @@ namespace Vuforia {
 				// if there is a detection (== true) of the current marker in the foreach loop:
 				if (currentStatus) { 
 
+					if (markerON != marker.name) {						// ADD THIS IN WHEN MORE EFFECT ARE ADDED: && (marker.name != "Hand")
+						// New marker has been detected					// kept out for testing purposes, but we do want to hand to run 
+						resetEffect (markerON);							// simultaneously with other effects
+					}														
+
 					// Which marker is it?
 					switch (marker.name) {
 
 					case "Trigger1":
-						//run visual effect
-						//MISSING: only if run first time...
+						//Run visual effect
+						//Only if run first time it is detected...
+						if (!triggered) {
 							RainEffect.SetActive (true);
-						print ("Running effect: RAIN");
+							print ("Running effect: RAIN");
+							// Store the marker which is ON
+							markerON = marker.name;
+							print ("MarkerON: " + markerON);
+						}
+						triggered = true;
 						break;
 
 // add more cases   case "Trigger2":
-// like this			//run visual effect
-//						print ("Running effect NAME 2");
-//						break;
-//
-//					case "Trigger3":
-//						//run visual effect
-//						print ("Running effect NAME 3");
+// like this			//Run visual effect
+//						//Only if run first time it is detected...
+//						if (!triggered) {
+//							//INSERT CODE HERE TO RUN EFFECT
+//							print ("Running effect: NAME");
+//							// Store the marker which is ON
+//							markerON = marker.name;
+//							print ("MarkerON: " + markerON);
+//						}
+//						triggered = true;
 //						break;
 
 					case "Hand":
-						//run visual effect
+						//Run visual effect
+						//Runs automatically because of Vuforia, only while detection is valid
 						print ("Running effect FROM HAND");
 						break;
 
@@ -90,7 +113,9 @@ namespace Vuforia {
 					}
 				}
 
-			}
+
+
+			} // Foreach loop END
 
 
 		}
@@ -103,6 +128,27 @@ namespace Vuforia {
 
 		}
 
+
+		private void resetEffect(string effectToTurnOFF) {
+			print ("Reset effect: " + effectToTurnOFF);
+			triggered = false;
+
+			switch (effectToTurnOFF) {
+
+			case "Trigger1":
+				RainEffect.SetActive (false);
+				break;
+
+
+// INSERT	case "Trigger2":
+//				RainEffect.SetActive (false);
+//				break;
+
+
+			default:
+				break;
+			}
+		}
 
 
 		// CURRENTLY NOT IN USE!
