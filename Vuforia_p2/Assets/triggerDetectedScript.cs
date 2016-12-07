@@ -181,7 +181,7 @@ namespace Vuforia {
 					case "Trigger9":
 
 						if (!triggered) {
-							DustStorm.SetActive(false);
+							DustStorm.SetActive(true);
 							print ("Running effect: DUST_STORM");
 							// Store the marker which is ON
 							markerON = marker.name;
